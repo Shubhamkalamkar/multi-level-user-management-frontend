@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 export class Register {
   registerForm: FormGroup;
   errorMessage: string = '';
+  successMessage: string = '';
   isLoading: boolean = false;
 
   constructor(
@@ -48,7 +49,10 @@ export class Register {
     this.authService.register(this.registerForm.value).subscribe({
       next: (res) => {
         if (res.success) {
-          this.router.navigate(['/dashboard']);
+          this.successMessage = res.message || 'Registration successful! Redirecting to login...';
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
         }
       },
       error: (err) => {

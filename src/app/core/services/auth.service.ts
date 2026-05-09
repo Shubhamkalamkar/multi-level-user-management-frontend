@@ -31,14 +31,7 @@ export class AuthService {
   }
 
   register(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, credentials).pipe(
-      tap((res: any) => {
-        if (res.success) {
-          this.currentUser.set(res.user);
-          localStorage.setItem('user', JSON.stringify(res.user));
-        }
-      })
-    );
+    return this.http.post(`${this.apiUrl}/register`, credentials);
   }
 
   login(credentials: any): Observable<any> {
