@@ -70,30 +70,30 @@
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(40px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInLeft {
-  from { opacity: 0; transform: translateX(-40px); }
+  from { opacity: 0; transform: translateX(-10px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(40px); }
+  from { opacity: 0; transform: translateX(10px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
 @layer utilities {
   .fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
+    animation: fadeInUp 0.3s ease-out forwards;
   }
 
   .fade-in-left {
-    animation: fadeInLeft 0.8s ease-out forwards;
+    animation: fadeInLeft 0.3s ease-out forwards;
   }
 
   .fade-in-right {
-    animation: fadeInRight 0.8s ease-out forwards;
+    animation: fadeInRight 0.3s ease-out forwards;
   }
 }
