@@ -1,0 +1,13 @@
+{
+  "/api": {
+    "target": "https://multi-level-user-management-backend.onrender.com",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/socket.io": {
+    "target": "https://multi-level-user-management-backend.onrender.com",
+    "secure": false,
+    "changeOrigin": true,
+    "ws": true
+  }
+}
