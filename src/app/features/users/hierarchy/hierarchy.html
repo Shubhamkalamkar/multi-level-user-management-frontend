@@ -1,68 +1,109 @@
-<div class="p-6 max-w-5xl mx-auto">
-  <div class="mb-6 flex items-center gap-3">
-    <mat-icon class="text-blue-500 scale-150">account_tree</mat-icon>
-    <div>
-      <h1 class="text-3xl font-bold text-gray-800 m-0">User Hierarchy</h1>
-      <p class="text-gray-500 m-0 text-sm">View your complete downline structure</p>
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto fade-in-up">
+    <!-- Header with Back Button -->
+    <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-4 cursor-pointer hover:opacity-80 transition-opacity w-fit" routerLink="/dashboard">
+        <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-200">
+          <mat-icon class="text-gray-600">arrow_back</mat-icon>
+        </div>
+        <span class="font-medium text-gray-700">Back to Dashboard</span>
+      </div>
+    </div>
+
+    <div class="glass-panel w-full p-0 overflow-hidden shadow-2xl bg-white border border-gray-100">
+      <!-- Premium Gradient Header -->
+      <div class="relative p-6 sm:p-8 text-white overflow-hidden bg-gradient-to-br from-indigo-800 via-blue-700 to-indigo-600">
+        <!-- Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+        
+        <div class="relative z-10 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shadow-inner border border-white/20 shrink-0">
+            <mat-icon class="scale-125 text-blue-200">account_tree</mat-icon>
+          </div>
+          <div>
+            <h2 class="text-2xl font-extrabold m-0 tracking-tight text-white drop-shadow-md">User Hierarchy</h2>
+            <p class="text-blue-100 mt-1 text-sm font-medium">View and manage your complete downline structure</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="p-4 sm:p-6 bg-white/50">
+        <div *ngIf="isLoading" class="flex flex-col items-center justify-center text-gray-500 py-10 gap-3">
+          <mat-icon class="animate-spin scale-125 text-indigo-500">autorenew</mat-icon>
+          <span class="font-medium">Building hierarchy tree...</span>
+        </div>
+
+        <div *ngIf="!isLoading && dataSource.data.length === 0" class="flex flex-col items-center justify-center text-gray-500 py-10 gap-3 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+          <mat-icon class="scale-125 text-gray-400">group_off</mat-icon>
+          <span class="font-medium">You do not have any downline users yet.</span>
+        </div>
+
+        <div *ngIf="!isLoading && dataSource.data.length > 0" class="bg-white rounded-xl shadow-sm border border-gray-100 p-3 sm:p-4">
+          <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="hierarchy-tree bg-transparent">
+            
+            <!-- Leaf Node (No children) -->
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle class="mb-2 hover:bg-transparent min-h-[48px]">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-2.5 border border-gray-200 rounded-lg bg-gray-50/80 w-full lg:w-3/4 shadow-sm hover:shadow-md hover:border-blue-200 transition-all ml-8">
+                <div class="w-9 h-9 bg-blue-100/80 rounded-full text-blue-600 flex items-center justify-center shrink-0 shadow-inner border border-blue-200/50">
+                  <mat-icon class="scale-[0.8]">person</mat-icon>
+                </div>
+                <div class="flex-1">
+                  <div class="font-bold text-gray-900 text-sm">{{node.username}}</div>
+                  <div class="text-[11px] font-medium text-gray-500 flex items-center gap-1 mt-0.5">
+                    <mat-icon class="scale-[0.6] -ml-1.5 text-gray-400">account_balance_wallet</mat-icon> 
+                    <span class="text-gray-700">{{node.balance | currency:'USD'}}</span>
+                  </div>
+                </div>
+                <div class="mt-1 sm:mt-0">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-200 text-gray-700 border border-gray-300">
+                    {{node.role}}
+                  </span>
+                </div>
+              </div>
+            </mat-tree-node>
+
+            <!-- Parent Node (Has children) -->
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+              <div class="mat-tree-node mb-2 hover:bg-transparent min-h-[48px]">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.username" class="bg-white shadow-sm border border-gray-200 mr-2 hover:bg-gray-50 transition-colors shrink-0 scale-90">
+                  <mat-icon class="mat-icon-rtl-mirror text-indigo-600">
+                    {{treeControl.isExpanded(node) ? 'remove' : 'add'}}
+                  </mat-icon>
+                </button>
+                
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-2.5 border border-indigo-100 rounded-lg bg-white w-full lg:w-3/4 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all relative overflow-hidden group cursor-pointer" (click)="treeControl.toggle(node)">
+                  <!-- Subtle gradient strip on the left -->
+                  <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-purple-500 group-hover:w-1.5 transition-all"></div>
+                  
+                  <div class="w-9 h-9 bg-indigo-50 rounded-full text-indigo-600 flex items-center justify-center shrink-0 shadow-inner border border-indigo-100 ml-1.5">
+                    <mat-icon class="scale-[0.8]">{{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}</mat-icon>
+                  </div>
+                  <div class="flex-1">
+                    <div class="font-extrabold text-gray-900 text-base">{{node.username}}</div>
+                    <div class="text-[11px] font-medium text-gray-500 flex items-center gap-1 mt-0.5">
+                      <mat-icon class="scale-[0.6] -ml-1.5 text-indigo-400">account_balance_wallet</mat-icon> 
+                      <span class="text-gray-700">{{node.balance | currency:'USD'}}</span>
+                    </div>
+                  </div>
+                  <div class="mt-1 sm:mt-0">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                          [ngClass]="node.role === 'Admin' ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-indigo-100 text-indigo-700 border border-indigo-200'">
+                      {{node.role}}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Nested Children -->
+              <div [class.hidden]="!treeControl.isExpanded(node)" role="group" class="pl-6 border-l-2 border-indigo-100 ml-5 my-2">
+                <ng-container matTreeNodeOutlet></ng-container>
+              </div>
+            </mat-nested-tree-node>
+            
+          </mat-tree>
+        </div>
+      </div>
     </div>
   </div>
-
-  <mat-card class="shadow-md rounded-xl p-6 min-h-[400px]">
-    <div *ngIf="isLoading" class="text-center text-gray-500 py-10">
-      Building hierarchy tree...
-    </div>
-
-    <div *ngIf="!isLoading && dataSource.data.length === 0" class="text-center text-gray-500 py-10">
-      You do not have any downline users yet.
-    </div>
-
-    <mat-tree *ngIf="!isLoading && dataSource.data.length > 0" [dataSource]="dataSource" [treeControl]="treeControl" class="hierarchy-tree">
-      
-      <!-- Leaf Node (No children) -->
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle class="mb-2">
-        <div class="flex items-center gap-3 p-2 border rounded-lg bg-gray-50 w-full md:w-2/3 shadow-sm hover:shadow-md transition-shadow ml-8">
-          <div class="bg-blue-100 p-2 rounded-full text-blue-600">
-            <mat-icon>person</mat-icon>
-          </div>
-          <div class="flex-1">
-            <div class="font-bold text-gray-800">{{node.username}}</div>
-            <div class="text-xs text-gray-500">Balance: {{node.balance | currency:'USD'}}</div>
-          </div>
-          <mat-chip-set>
-            <mat-chip color="accent" highlighted class="scale-75">{{node.role}}</mat-chip>
-          </mat-chip-set>
-        </div>
-      </mat-tree-node>
-
-      <!-- Parent Node (Has children) -->
-      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-        <div class="mat-tree-node">
-          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.username">
-            <mat-icon class="mat-icon-rtl-mirror">
-              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-            </mat-icon>
-          </button>
-          
-          <div class="flex items-center gap-3 p-2 border rounded-lg bg-white w-full md:w-2/3 shadow-sm hover:shadow-md transition-shadow">
-            <div class="bg-indigo-100 p-2 rounded-full text-indigo-600">
-              <mat-icon>{{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}</mat-icon>
-            </div>
-            <div class="flex-1">
-              <div class="font-bold text-gray-800 text-lg">{{node.username}}</div>
-              <div class="text-xs text-gray-500">Balance: {{node.balance | currency:'USD'}}</div>
-            </div>
-            <mat-chip-set>
-              <mat-chip color="primary" highlighted class="scale-75">{{node.role}}</mat-chip>
-            </mat-chip-set>
-          </div>
-        </div>
-        
-        <!-- Nested Children -->
-        <div [class.hidden]="!treeControl.isExpanded(node)" role="group" class="pl-8 border-l-2 border-gray-200 ml-4 mt-2">
-          <ng-container matTreeNodeOutlet></ng-container>
-        </div>
-      </mat-nested-tree-node>
-      
-    </mat-tree>
-  </mat-card>
 </div>

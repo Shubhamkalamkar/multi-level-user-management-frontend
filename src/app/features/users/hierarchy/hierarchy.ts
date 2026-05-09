@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { UserService } from '../../../core/services/user.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { RouterLink } from '@angular/router';
 
 interface UserNode {
   _id: string;
@@ -27,7 +28,8 @@ interface UserNode {
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatChipsModule
+    MatChipsModule,
+    RouterLink
   ],
   templateUrl: './hierarchy.html',
   styleUrl: './hierarchy.css'

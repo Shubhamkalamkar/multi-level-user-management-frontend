@@ -9,6 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { BalanceService } from '../../../core/services/balance.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { SocketService } from '../../../core/services/socket.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-statement',
@@ -22,7 +23,8 @@ import { SocketService } from '../../../core/services/socket.service';
     MatIconModule,
     MatChipsModule,
     DatePipe,
-    CurrencyPipe
+    CurrencyPipe,
+    RouterLink
   ],
   templateUrl: './statement.html',
   styleUrl: './statement.css'
