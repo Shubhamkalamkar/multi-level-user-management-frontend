@@ -5,6 +5,7 @@ import { Overview } from './features/dashboard/overview/overview';
 import { Statement } from './features/dashboard/statement/statement';
 import { CreateUser } from './features/users/create-user/create-user';
 import { Hierarchy } from './features/users/hierarchy/hierarchy';
+import { ChangePassword } from './features/users/change-password/change-password';
 import { Transfer } from './features/balance/transfer/transfer';
 import { authGuard } from './core/guards/auth.guard';
 
@@ -34,6 +35,11 @@ export const routes: Routes = [
   { 
     path: 'transfer', 
     component: Transfer,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'change-password',
+    component: ChangePassword,
     canActivate: [authGuard]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

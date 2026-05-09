@@ -35,8 +35,21 @@ export class Statement implements OnInit {
   isLoading = true;
   currentUserId: string = '';
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  private _paginator!: MatPaginator;
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this._paginator = mp;
+    if (this.dataSource) {
+      this.dataSource.paginator = mp;
+    }
+  }
+
+  private _sort!: MatSort;
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this._sort = ms;
+    if (this.dataSource) {
+      this.dataSource.sort = ms;
+    }
+  }
 
   constructor(
     private balanceService: BalanceService,
@@ -74,8 +87,8 @@ export class Statement implements OnInit {
           }));
           
           this.dataSource = new MatTableDataSource(processedData);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+          if (this._paginator) this.dataSource.paginator = this._paginator;
+          if (this._sort) this.dataSource.sort = this._sort;
           this.isLoading = false;
         }
       },

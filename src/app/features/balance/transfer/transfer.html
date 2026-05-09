@@ -51,9 +51,9 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Transfer Amount ($)</mat-label>
+            <mat-label>Transfer Amount (₹)</mat-label>
             <input matInput type="number" formControlName="amount" placeholder="0.00" class="text-xl font-bold">
-            <mat-icon matPrefix class="mr-3 text-green-500">attach_money</mat-icon>
+            <mat-icon matPrefix class="mr-3 text-green-500">currency_rupee</mat-icon>
             <mat-error *ngIf="transferForm.get('amount')?.hasError('required')">
               Amount is required
             </mat-error>

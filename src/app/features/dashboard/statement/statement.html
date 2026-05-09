@@ -12,7 +12,7 @@
 
     <div class="glass-panel w-full p-0 overflow-hidden shadow-2xl bg-white border border-gray-100">
       <!-- Gradient Header -->
-      <div class="relative p-10 text-white overflow-hidden bg-gradient-to-br from-indigo-800 to-purple-900">
+      <div class="relative p-10 text-white overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600">
         <!-- Pattern Overlay -->
         <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
         
@@ -89,7 +89,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right font-semibold text-gray-700"> Amount </th>
                 <td mat-cell *matCellDef="let element" class="text-right font-extrabold text-lg py-4 whitespace-nowrap" 
                     [ngClass]="element.isIncoming ? 'text-green-600' : 'text-gray-900'"> 
-                  {{element.isIncoming ? '+' : '-'}}{{element.amount | currency:'USD'}} 
+                  {{element.isIncoming ? '+' : '-'}}{{element.amount | currency:'INR'}} 
                 </td>
               </ng-container>
 
@@ -97,7 +97,7 @@
               <ng-container matColumnDef="commission">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-right font-semibold text-gray-700"> Commission </th>
                 <td mat-cell *matCellDef="let element" class="text-right text-gray-500 text-sm font-medium py-4 whitespace-nowrap"> 
-                  {{element.commission > 0 ? (element.commission | currency:'USD') : '-'}} 
+                  {{element.commission > 0 ? (element.commission | currency:'INR') : '-'}} 
                 </td>
               </ng-container>
 

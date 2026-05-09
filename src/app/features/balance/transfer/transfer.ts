@@ -92,7 +92,7 @@ export class Transfer implements OnInit {
       next: (res) => {
         this.isLoading = false;
         if (res.success) {
-          this.successMessage = `Successfully transferred $${payload.amount}.`;
+          this.successMessage = `Successfully transferred ₹${payload.amount}.`;
           this.transferForm.reset();
           setTimeout(() => this.router.navigate(['/dashboard']), 2000);
         }

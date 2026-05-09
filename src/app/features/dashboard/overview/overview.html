@@ -3,7 +3,7 @@
   <header class="bg-white shadow-sm sticky top-0 z-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-md">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-md">
           <mat-icon class="text-white">language</mat-icon>
         </div>
         <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Eminence Machine</h1>
@@ -47,6 +47,13 @@
           <button class="btn border-2 border-gray-200 text-gray-700 bg-white hover:border-gray-300 hover:bg-gray-50 shadow-sm w-full sm:w-auto" routerLink="/hierarchy">
             <div class="flex items-center justify-center gap-2"><mat-icon>account_tree</mat-icon> View Downline</div>
           </button>
+          <button *ngIf="currentUser?.role === 'Owner'" (click)="rechargeBalance()" [disabled]="isRecharging" class="btn bg-green-500 text-white hover:bg-green-600 shadow-md w-full sm:w-auto">
+            <div class="flex items-center justify-center gap-2">
+              <mat-icon *ngIf="!isRecharging">add_circle</mat-icon>
+              <mat-icon *ngIf="isRecharging" class="animate-spin">autorenew</mat-icon> 
+              Self Recharge
+            </div>
+          </button>
         </div>
       </div>
 
@@ -68,7 +75,7 @@
           <div class="mt-8">
             <h3 class="text-white/80 text-sm font-medium uppercase tracking-wider mb-2">Available Balance</h3>
             <div class="text-5xl font-extrabold tracking-tight drop-shadow-md">
-              {{ balance !== null ? (balance | currency:'USD') : '...' }}
+              {{ balance !== null ? (balance | currency:'INR') : '...' }}
             </div>
           </div>
           
@@ -96,8 +103,40 @@
           <p class="text-sm text-gray-500">Review your full transaction history and ledgers.</p>
         </div>
 
+        <div class="glass-panel p-6 bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-blue-200" routerLink="/change-password">
+          <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
+            <mat-icon>lock_reset</mat-icon>
+          </div>
+          <h4 class="font-bold text-gray-900 mb-1">Reset Passwords</h4>
+          <p class="text-sm text-gray-500">Change passwords for your immediate next-level users.</p>
+        </div>
 
 
+
+      </div>
+    </div>
+
+    <!-- Admin/Owner Balance Summary -->
+    <div *ngIf="adminSummary" class="mt-12 fade-in-up">
+      <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <mat-icon class="text-indigo-500">analytics</mat-icon> System Balance Summary
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Total System Balance -->
+        <div class="glass-panel p-6 bg-gradient-to-br from-indigo-50 to-white border border-indigo-100 shadow-sm">
+          <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">Total System Wallet</p>
+          <h4 class="text-3xl font-extrabold text-gray-900 mt-2">{{ adminSummary.totalSystemBalance | currency:'INR' }}</h4>
+        </div>
+        
+        <!-- Role Breakdowns -->
+        <div *ngFor="let stat of adminSummary.breakdown" class="glass-panel p-6 bg-white border border-gray-100 shadow-sm">
+          <div class="flex justify-between items-start">
+            <p class="text-sm font-medium text-gray-500 uppercase tracking-wide">{{ stat._id }}s</p>
+            <div class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-600">{{ stat.count }} Users</div>
+          </div>
+          <h4 class="text-2xl font-bold text-gray-800 mt-2">{{ stat.totalBalance | currency:'INR' }}</h4>
+        </div>
       </div>
     </div>
   </main>
