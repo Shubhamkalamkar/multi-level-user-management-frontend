@@ -54,8 +54,8 @@ export class ChangePassword implements OnInit {
     this.userService.getDownline().subscribe({
       next: (res) => {
         if (res.success) {
-          // Requirement: "Each user can change the password of their next-level users only."
-          this.downlineUsers = res.data.filter((u: any) => u.parentId?._id === currentId || u.parentId === currentId);
+          // Changed from 1-level to full downline, matching transfer logic
+          this.downlineUsers = res.data;
         }
       }
     });
