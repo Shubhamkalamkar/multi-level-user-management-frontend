@@ -1,0 +1,67 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-500 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="glass-panel w-full max-w-md p-8 fade-in-up">
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-4 shadow-lg border border-white/30 text-white">
+        <mat-icon class="scale-150">fingerprint</mat-icon>
+      </div>
+      <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome Back</h2>
+      <p class="mt-2 text-sm text-gray-700">
+        Don't have an account? 
+        <a routerLink="/register" class="font-bold text-indigo-600 hover:text-indigo-800 transition-colors underline">
+          Register now
+        </a>
+      </p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-300 text-red-700 p-3 rounded-lg text-sm text-center mb-2 fade-in-up shadow-sm">
+        {{ errorMessage }}
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Enter your username">
+        <mat-icon matSuffix class="text-gray-500">person</mat-icon>
+        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter your password">
+        <mat-icon matSuffix class="text-gray-500">lock</mat-icon>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <div class="flex flex-col gap-3 p-5 rounded-2xl bg-black/5 border border-black/10 mt-2">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-800 font-semibold flex items-center gap-2">
+            <mat-icon class="scale-75 text-indigo-600">security</mat-icon> Security Check
+          </span>
+          <button type="button" mat-icon-button class="text-indigo-600 hover:bg-black/5" (click)="loadCaptcha()" matTooltip="Refresh CAPTCHA">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </div>
+        <div class="bg-white p-2 rounded-xl flex items-center justify-center shadow-sm border border-gray-200" [innerHTML]="captchaSvg"></div>
+        
+        <mat-form-field appearance="outline" class="w-full mt-2 mb-0">
+          <mat-label>Enter CAPTCHA</mat-label>
+          <input matInput formControlName="captchaText" placeholder="Type the text above">
+          <mat-error *ngIf="loginForm.get('captchaText')?.hasError('required')">
+            CAPTCHA is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid || isLoading" class="btn btn-primary w-full mt-6 text-lg py-4 shadow-xl">
+        <span *ngIf="!isLoading">Sign in securely</span>
+        <span *ngIf="isLoading" class="flex items-center justify-center gap-2">
+          <mat-icon class="animate-spin">autorenew</mat-icon> Verifying...
+        </span>
+      </button>
+    </form>
+  </div>
+</div>

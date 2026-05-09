@@ -1,0 +1,53 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-fuchsia-500 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="glass-panel w-full max-w-md p-8 fade-in-up">
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-4 shadow-lg border border-white/30 text-white">
+        <mat-icon class="scale-150">person_add</mat-icon>
+      </div>
+      <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Create Account</h2>
+      <p class="mt-2 text-sm text-gray-700">
+        Already have an account? 
+        <a routerLink="/login" class="font-bold text-indigo-600 hover:text-indigo-800 transition-colors underline">
+          Sign in here
+        </a>
+      </p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-300 text-red-700 p-3 rounded-lg text-sm text-center mb-2 fade-in-up shadow-sm">
+        {{ errorMessage }}
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Choose a username">
+        <mat-icon matSuffix class="text-gray-500">person_outline</mat-icon>
+        <mat-error *ngIf="registerForm.get('username')?.hasError('required')">
+          Username is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('username')?.hasError('minlength')">
+          Username must be at least 3 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Create a password">
+        <mat-icon matSuffix class="text-gray-500">lock_outline</mat-icon>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+
+      <button type="submit" [disabled]="registerForm.invalid || isLoading" class="btn btn-primary w-full mt-6 text-lg py-4 shadow-xl">
+        <span *ngIf="!isLoading">Register Now</span>
+        <span *ngIf="isLoading" class="flex items-center justify-center gap-2">
+          <mat-icon class="animate-spin">autorenew</mat-icon> Creating account...
+        </span>
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto fade-in-up">
+    <!-- Header -->
+    <div class="mb-8 flex items-center gap-4 cursor-pointer hover:opacity-80 transition-opacity w-fit" routerLink="/dashboard">
+      <div class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center border border-gray-200">
+        <mat-icon class="text-gray-600">arrow_back</mat-icon>
+      </div>
+      <span class="font-medium text-gray-700">Back to Dashboard</span>
+    </div>
+
+    <div class="glass-panel w-full p-0 overflow-hidden shadow-2xl bg-white border border-gray-100">
+      <!-- Gradient Header -->
+      <div class="relative p-10 text-white overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+        <!-- Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+        
+        <div class="relative z-10 flex flex-col items-center text-center">
+          <div class="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-md flex items-center justify-center shadow-inner border border-white/20 mb-4">
+            <mat-icon class="scale-[2] text-blue-400">person_add</mat-icon>
+          </div>
+          <h2 class="text-3xl font-extrabold m-0 tracking-tight text-white drop-shadow-md">Create User</h2>
+          <p class="text-gray-300 mt-2 font-medium">Add a new user directly to your network hierarchy</p>
+        </div>
+      </div>
+
+      <!-- Form Content -->
+      <div class="p-6 sm:p-10 bg-white">
+        <div *ngIf="successMessage" class="bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm fade-in-up">
+          <mat-icon class="text-green-500">check_circle</mat-icon> 
+          <span class="font-medium">{{ successMessage }}</span>
+        </div>
+
+        <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 text-red-800 p-4 rounded-xl mb-8 flex items-center gap-3 shadow-sm fade-in-up">
+          <mat-icon class="text-red-500">error_outline</mat-icon> 
+          <span class="font-medium">{{ errorMessage }}</span>
+        </div>
+
+        <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6">
+          
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Choose a username">
+            <mat-icon matPrefix class="mr-3 text-gray-500">badge</mat-icon>
+            <mat-error *ngIf="createUserForm.get('username')?.hasError('required')">Required</mat-error>
+            <mat-error *ngIf="createUserForm.get('username')?.hasError('minlength')">Min 3 chars</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="Create a password">
+            <mat-icon matPrefix class="mr-3 text-gray-500">lock</mat-icon>
+            <mat-error *ngIf="createUserForm.get('password')?.hasError('required')">Required</mat-error>
+            <mat-error *ngIf="createUserForm.get('password')?.hasError('minlength')">Min 6 chars</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Commission Rate (%)</mat-label>
+            <input matInput type="number" formControlName="commissionRate" placeholder="0">
+            <mat-icon matPrefix class="mr-3 text-gray-500">percent</mat-icon>
+            <mat-hint class="text-gray-500">Percentage taken from incoming transfers.</mat-hint>
+            <mat-error *ngIf="createUserForm.get('commissionRate')?.hasError('min') || createUserForm.get('commissionRate')?.hasError('max')">
+              Must be between 0 and 100
+            </mat-error>
+          </mat-form-field>
+
+          <div class="flex flex-col sm:flex-row justify-end gap-4 mt-8 pt-6 border-t border-gray-100">
+            <button type="button" class="btn border-2 border-gray-200 text-gray-700 bg-white hover:border-gray-300 hover:bg-gray-50 shadow-sm w-full sm:w-auto" routerLink="/dashboard">
+              Cancel
+            </button>
+            <button type="submit" [disabled]="createUserForm.invalid || isLoading" class="btn btn-primary w-full sm:w-auto shadow-xl px-10">
+              <span *ngIf="!isLoading">Create User</span>
+              <span *ngIf="isLoading" class="flex items-center justify-center gap-2">
+                <mat-icon class="animate-spin scale-75">autorenew</mat-icon> Processing...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

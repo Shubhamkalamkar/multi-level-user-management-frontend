@@ -1,0 +1,110 @@
+<div class="min-h-screen bg-gray-50 pb-12">
+  <!-- Top Navigation / Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-md">
+          <mat-icon class="text-white">language</mat-icon>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Portal</h1>
+      </div>
+      <button class="btn btn-outline py-2 px-6 flex items-center gap-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:shadow-red-500/40" (click)="logout()">
+        <mat-icon class="scale-90">logout</mat-icon> Sign out
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8 fade-in-up">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Welcome Profile Card -->
+      <div class="glass-panel col-span-1 lg:col-span-2 p-8 shadow-xl bg-white border border-gray-100 relative overflow-hidden">
+        <!-- Decorative background circle -->
+        <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-indigo-50 opacity-50 blur-3xl"></div>
+        
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10 text-center sm:text-left">
+          <div class="w-20 h-20 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shadow-inner border border-indigo-200 shrink-0">
+            <mat-icon class="scale-150">person</mat-icon>
+          </div>
+          <div>
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-1">Welcome back, {{ currentUser?.username }}!</h2>
+            <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 mb-4 border border-purple-200 shadow-sm">
+              <mat-icon class="scale-75 mr-1">badge</mat-icon> {{ currentUser?.role }}
+            </div>
+            <p class="text-gray-600 leading-relaxed max-w-xl">
+              Access your administrative tools, manage your downline hierarchy, and transfer funds securely from your personalized portal.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row flex-wrap gap-4 relative z-10 border-t border-gray-100 pt-6">
+          <button class="btn btn-primary w-full sm:w-auto" routerLink="/transfer">
+            <div class="flex items-center justify-center gap-2"><mat-icon>swap_horiz</mat-icon> Transfer Funds</div>
+          </button>
+          <button class="btn btn-outline w-full sm:w-auto" routerLink="/create-user">
+            <div class="flex items-center justify-center gap-2"><mat-icon>person_add</mat-icon> Create User</div>
+          </button>
+          <button class="btn border-2 border-gray-200 text-gray-700 bg-white hover:border-gray-300 hover:bg-gray-50 shadow-sm w-full sm:w-auto" routerLink="/hierarchy">
+            <div class="flex items-center justify-center gap-2"><mat-icon>account_tree</mat-icon> View Downline</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Balance Card -->
+      <div class="glass-panel p-8 rounded-3xl text-white shadow-2xl relative overflow-hidden transform hover:scale-[1.02] transition-transform duration-300" style="background: var(--accent-gradient);">
+        <!-- Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+        
+        <div class="relative z-10 flex flex-col h-full justify-between">
+          <div class="flex justify-between items-start">
+            <div class="bg-white/20 p-3 rounded-2xl backdrop-blur-sm border border-white/30 shadow-inner">
+              <mat-icon class="scale-125">account_balance_wallet</mat-icon>
+            </div>
+            <div class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium tracking-wide flex items-center gap-1 backdrop-blur-sm border border-white/20">
+              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Live
+            </div>
+          </div>
+          
+          <div class="mt-8">
+            <h3 class="text-white/80 text-sm font-medium uppercase tracking-wider mb-2">Available Balance</h3>
+            <div class="text-5xl font-extrabold tracking-tight drop-shadow-md">
+              {{ balance !== null ? (balance | currency:'USD') : '...' }}
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-4 border-t border-white/20">
+            <button class="w-full py-3 bg-white/20 hover:bg-white/30 text-white rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 backdrop-blur-md" routerLink="/statement">
+              <mat-icon class="scale-90">receipt_long</mat-icon> View Statement
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links Grid -->
+    <div class="mt-12">
+      <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <mat-icon class="text-gray-400">grid_view</mat-icon> Quick Actions
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="glass-panel p-6 bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-indigo-200" routerLink="/statement">
+          <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-sm">
+            <mat-icon>receipt_long</mat-icon>
+          </div>
+          <h4 class="font-bold text-gray-900 mb-1">Account Statement</h4>
+          <p class="text-sm text-gray-500">Review your full transaction history and ledgers.</p>
+        </div>
+
+        <div *ngIf="currentUser?.role === 'Admin' || currentUser?.role === 'Owner'" class="glass-panel p-6 bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-red-200" routerLink="/hierarchy">
+          <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors shadow-sm">
+            <mat-icon>admin_panel_settings</mat-icon>
+          </div>
+          <h4 class="font-bold text-gray-900 mb-1">Admin Operations</h4>
+          <p class="text-sm text-gray-500">Manage network hierarchy and monitor all users.</p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
