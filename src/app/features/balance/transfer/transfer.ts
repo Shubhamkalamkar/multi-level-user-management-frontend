@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,7 +40,8 @@ export class Transfer implements OnInit {
     private balanceService: BalanceService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.transferForm = this.fb.group({
       targetUserId: ['', Validators.required],
@@ -54,6 +55,11 @@ export class Transfer implements OnInit {
 
   ngOnInit(): void {
     this.loadEligibleReceivers();
+    this.route.queryParams.subscribe(params => {
+      if (params['userId']) {
+        this.transferForm.patchValue({ targetUserId: params['userId'] });
+      }
+    });
   }
 
   loadEligibleReceivers(): void {

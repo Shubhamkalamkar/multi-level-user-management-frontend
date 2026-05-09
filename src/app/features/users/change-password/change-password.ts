@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,8 @@ export class ChangePassword implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.passwordForm = this.fb.group({
       targetUserId: ['', Validators.required],
@@ -47,6 +48,11 @@ export class ChangePassword implements OnInit {
 
   ngOnInit(): void {
     this.loadDirectChildren();
+    this.route.queryParams.subscribe(params => {
+      if (params['userId']) {
+        this.passwordForm.patchValue({ targetUserId: params['userId'] });
+      }
+    });
   }
 
   loadDirectChildren(): void {

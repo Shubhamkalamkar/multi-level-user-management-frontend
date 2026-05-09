@@ -44,7 +44,7 @@
             
             <!-- Leaf Node (No children) -->
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle class="mb-2 hover:bg-transparent min-h-[48px]">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-2.5 border border-gray-200 rounded-lg bg-gray-50/80 w-full lg:w-3/4 shadow-sm hover:shadow-md hover:border-blue-200 transition-all ml-8">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-3 p-2.5 border border-gray-200 rounded-lg bg-gray-50/80 w-full lg:w-3/4 shadow-sm hover:shadow-md hover:border-blue-200 transition-all ml-8 group">
                 <div class="w-9 h-9 bg-blue-100/80 rounded-full text-blue-600 flex items-center justify-center shrink-0 shadow-inner border border-blue-200/50">
                   <mat-icon class="scale-[0.8]">person</mat-icon>
                 </div>
@@ -55,10 +55,19 @@
                     <span class="text-gray-700">{{node.balance | currency:'INR'}}</span>
                   </div>
                 </div>
-                <div class="mt-1 sm:mt-0">
+                <div class="mt-1 sm:mt-0 flex items-center gap-2">
                   <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-200 text-gray-700 border border-gray-300">
                     {{node.role}}
                   </span>
+                  
+                  <div class="flex items-center gap-1">
+                    <button mat-icon-button class="scale-75 text-green-600 bg-green-50 hover:bg-green-100 shadow-sm border border-green-200" [routerLink]="['/transfer']" [queryParams]="{userId: node._id}" matTooltip="Transfer Money">
+                      <mat-icon>paid</mat-icon>
+                    </button>
+                    <button mat-icon-button class="scale-75 text-amber-600 bg-amber-50 hover:bg-amber-100 shadow-sm border border-amber-200" [routerLink]="['/change-password']" [queryParams]="{userId: node._id}" matTooltip="Reset Password">
+                      <mat-icon>vpn_key</mat-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
             </mat-tree-node>
@@ -86,11 +95,20 @@
                       <span class="text-gray-700">{{node.balance | currency:'INR'}}</span>
                     </div>
                   </div>
-                  <div class="mt-1 sm:mt-0">
+                  <div class="mt-1 sm:mt-0 flex items-center gap-2">
                     <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
                           [ngClass]="node.role === 'Admin' ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-indigo-100 text-indigo-700 border border-indigo-200'">
                       {{node.role}}
                     </span>
+                    
+                    <div class="flex items-center gap-1">
+                      <button mat-icon-button (click)="$event.stopPropagation()" class="scale-75 text-green-600 bg-green-50 hover:bg-green-100 shadow-sm border border-green-200" [routerLink]="['/transfer']" [queryParams]="{userId: node._id}" matTooltip="Transfer Money">
+                        <mat-icon>paid</mat-icon>
+                      </button>
+                      <button mat-icon-button (click)="$event.stopPropagation()" class="scale-75 text-amber-600 bg-amber-50 hover:bg-amber-100 shadow-sm border border-amber-200" [routerLink]="['/change-password']" [queryParams]="{userId: node._id}" matTooltip="Reset Password">
+                        <mat-icon>vpn_key</mat-icon>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
