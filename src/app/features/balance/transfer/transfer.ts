@@ -68,9 +68,8 @@ export class Transfer implements OnInit {
       // Normal users can only transfer to downline
       this.userService.getDownline().subscribe({
         next: (res) => {
-          // Filter direct children only for normal transfer, but requirement says "next-level users only"
-          const currentId = this.authService.currentUser()?.id;
-          this.downlineUsers = res.data.filter((u: any) => u.parentId?._id === currentId || u.parentId === currentId);
+          // Normal users can now transfer to anyone in their downline
+          this.downlineUsers = res.data;
         }
       });
     }
