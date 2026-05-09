@@ -52,16 +52,14 @@ export class Hierarchy implements OnInit {
   }
 
   loadHierarchy(): void {
-    // If admin, we fetch next level. Admin can click a user to fetch deep downline.
-    // For simplicity of this tree, let's assume getDownline fetches the whole tree 
-    // for the current user, and admin gets all.
-    const req = this.isAdmin ? this.userService.getAdminNextLevel() : this.userService.getDownline();
-
-    req.subscribe({
+    this.userService.getDownline().subscribe({
       next: (res) => {
         if (res.success) {
-          this.dataSource.data = this.buildTree(res.data);
-          this.treeControl.dataNodes = this.dataSource.data;
+          const treeData = this.buildTree(res.data);
+          this.treeControl = new NestedTreeControl<UserNode>(node => node.children);
+          this.dataSource = new MatTreeNestedDataSource<UserNode>();
+          this.dataSource.data = treeData;
+          this.treeControl.dataNodes = treeData;
           this.treeControl.expandAll();
           this.isLoading = false;
         }

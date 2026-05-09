@@ -54,6 +54,7 @@ export class CreateUser {
         if (res.success) {
           this.successMessage = `User ${res.data.username} created successfully!`;
           this.createUserForm.reset({ commissionRate: 0 });
+          setTimeout(() => this.router.navigate(['/dashboard']), 2000);
         }
       },
       error: (err) => {
