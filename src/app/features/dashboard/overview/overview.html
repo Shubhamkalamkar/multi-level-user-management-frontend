@@ -6,7 +6,7 @@
         <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-md">
           <mat-icon class="text-white">language</mat-icon>
         </div>
-        <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Portal</h1>
+        <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Eminence Machine</h1>
       </div>
       <button class="btn btn-outline py-2 px-6 flex items-center gap-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white hover:shadow-red-500/40" (click)="logout()">
         <mat-icon class="scale-90">logout</mat-icon> Sign out
@@ -32,7 +32,7 @@
               <mat-icon class="scale-75 mr-1">badge</mat-icon> {{ currentUser?.role }}
             </div>
             <p class="text-gray-600 leading-relaxed max-w-xl">
-              Access your administrative tools, manage your downline hierarchy, and transfer funds securely from your personalized portal.
+              Access your administrative tools, manage your downline hierarchy, and transfer funds securely from your personalized Eminence Machine.
             </p>
           </div>
         </div>
@@ -96,13 +96,7 @@
           <p class="text-sm text-gray-500">Review your full transaction history and ledgers.</p>
         </div>
 
-        <div *ngIf="currentUser?.role === 'Admin' || currentUser?.role === 'Owner'" class="glass-panel p-6 bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group border border-gray-100 hover:border-red-200" routerLink="/hierarchy">
-          <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors shadow-sm">
-            <mat-icon>admin_panel_settings</mat-icon>
-          </div>
-          <h4 class="font-bold text-gray-900 mb-1">Admin Operations</h4>
-          <p class="text-sm text-gray-500">Manage network hierarchy and monitor all users.</p>
-        </div>
+
 
       </div>
     </div>
