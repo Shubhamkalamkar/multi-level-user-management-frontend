@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://multi-level-user-management-backend.onrender.com/api', // Update with production URL later
-  socketUrl: 'https://multi-level-user-management-backend.onrender.com'   // Update with production URL later
+  apiUrl: '/api', // Proxied via Netlify _redirects to avoid 3rd-party cookie blocking
+  socketUrl: '/'   // Same proxy for sockets if supported, or direct depending on needs
 };

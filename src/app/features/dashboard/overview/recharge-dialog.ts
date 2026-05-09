@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
         <h2 class="text-2xl font-bold text-gray-800 m-0">Self Recharge</h2>
       </div>
       
-      <p class="text-gray-600 mb-6 text-sm">Enter the amount of INR you want to instantly add to your owner wallet.</p>
+      <p class="text-gray-600 mb-6 text-sm">Enter the amount of INR you want to instantly add to your admin wallet.</p>
       
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Amount (INR)</mat-label>

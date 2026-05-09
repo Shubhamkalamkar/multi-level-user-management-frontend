@@ -47,7 +47,7 @@
           <button class="btn border-2 border-gray-200 text-gray-700 bg-white hover:border-gray-300 hover:bg-gray-50 shadow-sm w-full sm:w-auto" routerLink="/hierarchy">
             <div class="flex items-center justify-center gap-2"><mat-icon>account_tree</mat-icon> View Downline</div>
           </button>
-          <button *ngIf="currentUser?.role === 'Owner'" (click)="rechargeBalance()" [disabled]="isRecharging" class="btn bg-green-500 text-white hover:bg-green-600 shadow-md w-full sm:w-auto">
+          <button *ngIf="currentUser?.role === 'Admin'" (click)="rechargeBalance()" [disabled]="isRecharging" class="btn bg-green-500 text-white hover:bg-green-600 shadow-md w-full sm:w-auto">
             <div class="flex items-center justify-center gap-2">
               <mat-icon *ngIf="!isRecharging">add_circle</mat-icon>
               <mat-icon *ngIf="isRecharging" class="animate-spin">autorenew</mat-icon> 
@@ -116,7 +116,7 @@
       </div>
     </div>
 
-    <!-- Admin/Owner Balance Summary -->
+    <!-- Admin Balance Summary -->
     <div *ngIf="adminSummary" class="mt-12 fade-in-up">
       <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
         <mat-icon class="text-indigo-500">analytics</mat-icon> System Balance Summary

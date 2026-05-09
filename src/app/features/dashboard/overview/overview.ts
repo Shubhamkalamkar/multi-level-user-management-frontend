@@ -54,8 +54,8 @@ export class Overview implements OnInit {
       }
     });
 
-    // If Admin or Owner, load balance summary
-    if (this.currentUser?.role === 'Admin' || this.currentUser?.role === 'Owner') {
+    // If Admin, load balance summary
+    if (this.currentUser?.role === 'Admin') {
       this.adminService.getBalanceSummary().subscribe({
         next: (res) => {
           if (res.success) {

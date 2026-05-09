@@ -33,7 +33,7 @@ export class Transfer implements OnInit {
   errorMessage: string = '';
   successMessage: string = '';
   isLoading: boolean = false;
-  isAdminOrOwner: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +49,7 @@ export class Transfer implements OnInit {
     });
 
     const user = this.authService.currentUser();
-    this.isAdminOrOwner = user?.role === 'Admin' || user?.role === 'Owner';
+    this.isAdmin = user?.role === 'Admin';
   }
 
   ngOnInit(): void {

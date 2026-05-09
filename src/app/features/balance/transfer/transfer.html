@@ -71,11 +71,11 @@
           <div class="bg-indigo-50/50 border border-indigo-100 p-5 rounded-2xl text-sm text-indigo-900 flex gap-4 mt-2">
             <mat-icon class="text-indigo-500 shrink-0">info</mat-icon>
             <div class="leading-relaxed">
-              <div *ngIf="!isAdminOrOwner">
+              <div *ngIf="!isAdmin">
                 <strong class="block mb-1">Standard Transfer</strong>
                 Funds will be instantly deducted from your balance and credited to the recipient. A network commission may be automatically applied.
               </div>
-              <div *ngIf="isAdminOrOwner">
+              <div *ngIf="isAdmin">
                 <strong class="block mb-1 flex items-center gap-2"><mat-icon class="scale-75 text-red-500">warning</mat-icon> Admin Mode Active</strong>
                 Funds will be credited to the target user and deducted from their immediate parent's balance.
               </div>
