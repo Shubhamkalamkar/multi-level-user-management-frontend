@@ -64,17 +64,12 @@ export class Transfer implements OnInit {
 
   loadEligibleReceivers(): void {
     if (this.authService.currentUser()?.role === 'Admin') {
-      // Admins can transfer to anyone in the hierarchy (deducted from parent)
-      // For simplicity in UI, we might load all users or let them search. 
-      // Assuming getDownline fetches everyone for admin for now.
       this.userService.getDownline().subscribe({
         next: (res) => this.downlineUsers = res.data
       });
     } else {
-      // Normal users can only transfer to downline
       this.userService.getDownline().subscribe({
         next: (res) => {
-          // Normal users can now transfer to anyone in their downline
           this.downlineUsers = res.data;
         }
       });

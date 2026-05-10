@@ -60,7 +60,6 @@ export class ChangePassword implements OnInit {
     this.userService.getDownline().subscribe({
       next: (res) => {
         if (res.success) {
-          // Changed from 1-level to full downline, matching transfer logic
           this.downlineUsers = res.data;
         }
       }
